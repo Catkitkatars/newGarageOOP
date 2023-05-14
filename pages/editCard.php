@@ -14,7 +14,7 @@ $i = 0;
     <?php if($value == 'id') continue; $i++?>
 
     <label for=<?=htmlspecialchars($value)?>><?=htmlspecialchars(ucfirst($value))?></label></br>
-    <input type="text" name=<?=htmlspecialchars($value)?> placeholder="<?= $placeholderData[$i] ?>"></br>
+    <input type="text" name=<?=htmlspecialchars($value)?> value="<?= $placeholderData[$i] ?>"></br>
 <?php endforeach ?> 
 
 </br><button type='submit'>Edit</button>

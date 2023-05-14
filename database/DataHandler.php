@@ -4,12 +4,6 @@ require_once 'Connect.php';
 class DataHandler extends Connect
 {
 
-
-    public function __construct()
-    { 
-        parent::__construct(); // зачем?
-    }
-
     public function getColumnNames() 
     {
         $columnsNames = [];
@@ -18,7 +12,7 @@ class DataHandler extends Connect
 
         $sqlResult = $this->connect->query($sql);
 
-        while ($sqlArray = $sqlResult->fetch_assoc()) { // Задать вопрос, почему такое работает
+        while ($sqlArray = $sqlResult->fetch_assoc()) { 
             array_push($columnsNames, $sqlArray["COLUMN_NAME"]);
         }
 
@@ -32,23 +26,23 @@ class DataHandler extends Connect
 
     public function getData() 
     {
-        $data = [];
-        $datas = mysqli_query($this->connect, "SELECT * FROM `$this->tableName`");
-        $datas = mysqli_fetch_all($datas);
+        $finishedData = [];
+        $sql = "SELECT * FROM `$this->tableName`";
+        $data = $this->connect->query($sql)->fetch_all();
         
-        foreach ($datas as $key => $values) {
+        foreach ($data as $key => $values) {
             $arrayCombine = array_combine($this->getColumnNames(), $values);
-            array_push($data, $arrayCombine);
+            array_push($finishedData, $arrayCombine);
         }
-        return $data;
+        return $finishedData;
     }
 
     public function getOneData()
     {
         $id = $_GET['id'];
+        $sql = "SELECT * FROM `$this->tableName` WHERE id = '$id'";
 
-        $data = mysqli_query($this->connect, "SELECT * FROM `$this->tableName` WHERE id = '$id'");
-        $data = mysqli_fetch_all($data);
+        $data = $this->connect->query($sql)->fetch_all();
         return $data[0];
     }
 
@@ -73,9 +67,9 @@ class DataHandler extends Connect
         $keys  = implode(', ', $keys );
         $values = implode(', ', $values);
 
-        $query = "INSERT INTO `$this->tableName` ($keys) VALUES (NULL".','."$values)";
+        $sql = "INSERT INTO `$this->tableName` ($keys) VALUES (NULL".','."$values)";
 
-        mysqli_query($this->connect, $query);
+        $this->connect->query($sql);
     }
 
     public function editData() 
@@ -84,22 +78,23 @@ class DataHandler extends Connect
         if(!$id){
             return die('ID not found');
         }
-        $query = '';
+        $sql = '';
         foreach ($_POST as $key => $value) {
-            $query .= "`$key` = '$value',";
+            $sql .= "`$key` = '$value',";
         }
-        $query = rtrim($query, ',');
-        $query = "UPDATE `$this->tableName` SET ". $query ." WHERE `$this->tableName`.`id` = '$id'";
-  
-        mysqli_query($this->connect, $query);
+        $sql = rtrim($sql, ',');
+        $sql = "UPDATE `$this->tableName` SET ". $sql ." WHERE `$this->tableName`.`id` = '$id'";
+
+        $this->connect->query($sql);
     }
 
     public function deleteData()
     {
         $id = $_GET['id'];
+        $sql = "DELETE FROM `$this->tableName` WHERE `$this->tableName`.`id` = '$id'";
         if(!$id){
             return die('ID not found');
         }
-        mysqli_query($this->connect, "DELETE FROM `$this->tableName` WHERE `$this->tableName`.`id` = '$id'");
+        $this->connect->query($sql);
     }
 }
