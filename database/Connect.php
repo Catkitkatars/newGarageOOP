@@ -1,16 +1,22 @@
 <?php
 
 class Connect {
-    protected $servername = "localhost";
-    protected $username = "root";
-    protected $password = "root";
-    protected $dbname = "first_db";
-    protected $tableName = "GarageWithCars";
+    public $servername;
+    public $username;
+    public $password;
+    public $dbname;
+    public $tableName;
 
-    protected $connect;
+    public $mysqli;
 
-    public function __construct()
+    public function __construct($servername, $username, $password, $dbname, $tableName)
     {
-        $this->connect = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        $this->servername = $servername;
+        $this->username = $username;
+        $this->password = $password;
+        $this->dbname = $dbname;
+        $this->tableName = $tableName;
+
+        $this->mysqli = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
     }
 }

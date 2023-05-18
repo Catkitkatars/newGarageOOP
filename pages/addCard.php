@@ -2,8 +2,15 @@
 
 <?php 
 require_once '../database/DataHandler.php';
+require_once '../database/config.php';
 
-$colunmName = new DataHandler();
+$colunmName = new DataHandler(
+    $arrayFromEnter['servername'],
+    $arrayFromEnter['username'], 
+    $arrayFromEnter['password'],
+    $arrayFromEnter['dbname'],
+    $arrayFromEnter['tableName'], 
+);
 ?>
 <form action="../requests/add.php" method="POST" >
 <?php foreach($colunmName->getColumnNames() as $key => $value): ?>

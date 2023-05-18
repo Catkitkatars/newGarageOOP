@@ -1,7 +1,14 @@
 <?php
 require_once '../database/DataHandler.php';
+require_once '../database/config.php';
 
-$add = new DataHandler();
+$add = new DataHandler(
+    $arrayFromEnter['servername'],
+    $arrayFromEnter['username'], 
+    $arrayFromEnter['password'],
+    $arrayFromEnter['dbname'],
+    $arrayFromEnter['tableName'] 
+);
 
 $add->addData();
 ?>

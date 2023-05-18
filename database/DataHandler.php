@@ -1,8 +1,13 @@
 <?php
 require_once 'Connect.php';
 
+
 class DataHandler extends Connect
 {
+    public function __construct($servername, $username, $password, $dbname, $tableName)
+    {
+        parent::__construct($servername, $username, $password, $dbname, $tableName);
+    }
 
     public function getColumnNames() 
     {
@@ -10,7 +15,7 @@ class DataHandler extends Connect
 
         $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$this->dbname' AND TABLE_NAME = '$this->tableName'";
 
-        $sqlResult = $this->connect->query($sql);
+        $sqlResult = $this->mysqli->query($sql);
 
         while ($sqlArray = $sqlResult->fetch_assoc()) { 
             array_push($columnsNames, $sqlArray["COLUMN_NAME"]);
@@ -28,7 +33,7 @@ class DataHandler extends Connect
     {
         $finishedData = [];
         $sql = "SELECT * FROM `$this->tableName`";
-        $data = $this->connect->query($sql)->fetch_all();
+        $data = $this->mysqli->query($sql)->fetch_all();
         
         foreach ($data as $key => $values) {
             $arrayCombine = array_combine($this->getColumnNames(), $values);
@@ -42,7 +47,7 @@ class DataHandler extends Connect
         $id = $_GET['id'];
         $sql = "SELECT * FROM `$this->tableName` WHERE id = '$id'";
 
-        $data = $this->connect->query($sql)->fetch_all();
+        $data = $this->mysqli->query($sql)->fetch_all();
         return $data[0];
     }
 
@@ -69,7 +74,7 @@ class DataHandler extends Connect
 
         $sql = "INSERT INTO `$this->tableName` ($keys) VALUES (NULL".','."$values)";
 
-        $this->connect->query($sql);
+        $this->mysqli->query($sql);
     }
 
     public function editData() 
@@ -85,7 +90,7 @@ class DataHandler extends Connect
         $sql = rtrim($sql, ',');
         $sql = "UPDATE `$this->tableName` SET ". $sql ." WHERE `$this->tableName`.`id` = '$id'";
 
-        $this->connect->query($sql);
+        $this->mysqli->query($sql);
     }
 
     public function deleteData()
@@ -95,6 +100,6 @@ class DataHandler extends Connect
         if(!$id){
             return die('ID not found');
         }
-        $this->connect->query($sql);
+        $this->mysqli->query($sql);
     }
 }
