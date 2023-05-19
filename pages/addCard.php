@@ -2,14 +2,16 @@
 
 <?php 
 require_once '../database/DataHandler.php';
-require_once '../database/config.php';
+
+
+$config = require_once '../config.php';
 
 $colunmName = new DataHandler(
-    $arrayFromEnter['servername'],
-    $arrayFromEnter['username'], 
-    $arrayFromEnter['password'],
-    $arrayFromEnter['dbname'],
-    $arrayFromEnter['tableName'], 
+    $config['mysql']['servername'],
+    $config['mysql']['username'], 
+    $config['mysql']['password'],
+    $config['mysql']['dbname'],
+    $config['mysql']['tableName'] 
 );
 ?>
 <form action="../requests/add.php" method="POST" >

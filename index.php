@@ -1,14 +1,17 @@
 <?php 
 require_once 'database/DataHandler.php';
 require_once 'widgets/WidgetCard.php';
-require_once 'database/config.php';
+
+
+$config = require_once 'config.php';
+
 
 $data = new DataHandler(
-    $arrayFromEnter['servername'],
-    $arrayFromEnter['username'], 
-    $arrayFromEnter['password'],
-    $arrayFromEnter['dbname'],
-    $arrayFromEnter['tableName'] 
+    $config['mysql']['servername'],
+    $config['mysql']['username'], 
+    $config['mysql']['password'],
+    $config['mysql']['dbname'],
+    $config['mysql']['tableName'] 
 );
 
 $widgetCard = new WidgetCard($data->getData());
