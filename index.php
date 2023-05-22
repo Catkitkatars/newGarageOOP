@@ -1,31 +1,30 @@
 <?php 
 require_once 'database/DataHandler.php';
 require_once 'widgets/WidgetCard.php';
+require_once 'widgets/MainBanner.php';
+require_once 'templates/ob_include.php';
 
 
 $config = require_once 'config.php';
 
+$banner = new MainBanner(    
+    $config['mysql']['servername'],
+    $config['mysql']['username'], 
+    $config['mysql']['password'],
+    $config['mysql']['dbname'],
+    $config['mysql']['tableName']['banner_db']);
 
 $data = new DataHandler(
     $config['mysql']['servername'],
     $config['mysql']['username'], 
     $config['mysql']['password'],
     $config['mysql']['dbname'],
-    $config['mysql']['tableName'] 
+    $config['mysql']['tableName']['cards_db']
 );
 
 $widgetCard = new WidgetCard($data->getData());
 
-
-function ob_include(): string
-{
-    extract(func_get_arg(1));
-    ob_start();
-    require func_get_arg(0);
-    return ob_get_clean();
-}
-
-echo ob_include('./index.phtml', ['widgetCard'=> $widgetCard]);
+echo ob_include(__DIR__ .'/templates/index.phtml', ['banner'=>$banner, 'widgetCard'=> $widgetCard]);
 
 
 

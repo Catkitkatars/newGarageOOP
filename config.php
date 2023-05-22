@@ -6,6 +6,9 @@ return [
         'username' => "root",
         'password' => "root",
         'dbname' => "first_db",
-        'tableName' => "GarageWithCars"
+        'tableName' => [
+            'cards_db' => "GarageWithCars",
+            'banner_db' => "MainBanner"
+        ]
     ]
 ];

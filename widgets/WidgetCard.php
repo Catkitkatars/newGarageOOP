@@ -11,6 +11,6 @@ class WidgetCard
 
     public function render() : string
     {
-        return ob_include(__DIR__ . '/widgetCard.phtml', ['data' => $this->data]);
+        return ob_include(__DIR__ .'/../templates/widgetCard.phtml', ['data' => $this->data]);
     } 
 }

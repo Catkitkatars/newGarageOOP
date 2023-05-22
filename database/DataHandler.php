@@ -102,4 +102,24 @@ class DataHandler extends Connect
         }
         $this->mysqli->query($sql);
     }
+
+    public function bannerCounter(){
+        $templateData = ['url' => '../img/template.png'];
+
+        $sql= "SELECT * FROM `$this->tableName` WHERE `show_counter`=(SELECT MAX(`show_counter`) FROM `$this->tableName`)";
+        $data = $this->mysqli->query($sql)->fetch_assoc();
+
+        if($data['show_counter'] <= 0) {
+            return $templateData;
+        }
+        else 
+        {
+            $sqlEdit = "UPDATE `$this->tableName` SET show_counter = ". (--$data['show_counter']) ." WHERE id = '{$data['id']}'";
+            $this->mysqli->query($sqlEdit);
+            return $data;
+        }
+        
+    }
 }
+
+
