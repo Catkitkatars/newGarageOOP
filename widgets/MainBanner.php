@@ -5,9 +5,9 @@ require_once 'templates/ob_include.php';
 
 class MainBanner extends DataHandler {
 
-    public function __construct($servername, $username, $password, $dbname, $tableName)
+    public function __construct($connect, $table)
     {
-        parent::__construct($servername, $username, $password, $dbname, $tableName);
+        parent::__construct($connect, $table);
         
     }
 

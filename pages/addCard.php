@@ -2,24 +2,19 @@
 
 <?php 
 require_once '../database/DataHandler.php';
+require_once '../init.php';
+require_once '../templates/ob_include.php';
+
+$tableName = $_GET['tableName'];
 
 
-$config = require_once '../config.php';
 
-$colunmName = new DataHandler(
-    $config['mysql']['servername'],
-    $config['mysql']['username'], 
-    $config['mysql']['password'],
-    $config['mysql']['dbname'],
-    $config['mysql']['tableName'] 
+$addCard = new DataHandler(
+    $GLOBALS['connect']->mysqli,
+    $tableName
 );
-?>
-<form action="../requests/add.php" method="POST" >
-<?php foreach($colunmName->getColumnNames() as $key => $value): ?>
-    <?php if($value == 'id') continue;?>
-    <label for=<?=htmlspecialchars($value)?>><?=htmlspecialchars(ucfirst($value))?></label></br>
-    <input type="text" name=<?=htmlspecialchars($value)?>></br>
-<?php endforeach ?> 
-</br><button type='submit'>Add</button>
-</form>
-<?php
+
+$getColumnNames = $addCard->getColumnNames($GLOBALS['config']['mysql']['dbname']);
+
+echo ob_include(__DIR__ .'/../templates/addCard.phtml', ['getColumnNames' => $getColumnNames, 'tableName' => $tableName]);
+

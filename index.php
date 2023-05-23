@@ -4,27 +4,25 @@ require_once 'widgets/WidgetCard.php';
 require_once 'widgets/MainBanner.php';
 require_once 'templates/ob_include.php';
 
+require_once 'init.php';
 
-$config = require_once 'config.php';
 
-$banner = new MainBanner(    
-    $config['mysql']['servername'],
-    $config['mysql']['username'], 
-    $config['mysql']['password'],
-    $config['mysql']['dbname'],
-    $config['mysql']['tableName']['banner_db']);
-
-$data = new DataHandler(
-    $config['mysql']['servername'],
-    $config['mysql']['username'], 
-    $config['mysql']['password'],
-    $config['mysql']['dbname'],
-    $config['mysql']['tableName']['cards_db']
+$banner = new MainBanner(
+    $GLOBALS['connect']->mysqli,
+    $GLOBALS['config']['mysql']['tableName']['banner_db']
+);
+$carsData = new DataHandler(
+    $GLOBALS['connect']->mysqli,
+    $GLOBALS['config']['mysql']['tableName']['cards_db']
+);
+$motoData = new DataHandler(
+    $GLOBALS['connect']->mysqli,
+    $GLOBALS['config']['mysql']['tableName']['moto_db']
 );
 
-$widgetCard = new WidgetCard($data->getData());
 
-echo ob_include(__DIR__ .'/templates/index.phtml', ['banner'=>$banner, 'widgetCard'=> $widgetCard]);
+$widgetCardCars = new WidgetCard($carsData->getData($GLOBALS['config']['mysql']['dbname']));
+$widgetCardMoto = new WidgetCard($motoData->getData($GLOBALS['config']['mysql']['dbname']));
 
-
+echo ob_include(__DIR__ .'/templates/index.phtml', ['banner'=>$banner, 'widgetCardCars'=> $widgetCardCars, 'widgetCardMoto'=> $widgetCardMoto]);
 

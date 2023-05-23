@@ -1,14 +1,13 @@
 <?php 
 require_once '../database/DataHandler.php';
+require_once '../init.php';
 
-$config = require_once '../config.php';
+
+
 
 $edit = new DataHandler(
-    $config['mysql']['servername'],
-    $config['mysql']['username'], 
-    $config['mysql']['password'],
-    $config['mysql']['dbname'],
-    $config['mysql']['tableName'] 
+    $GLOBALS['connect']->mysqli,
+    $_GET['tableName']
 );
 
 $edit->editData();

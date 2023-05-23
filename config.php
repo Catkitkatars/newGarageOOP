@@ -8,7 +8,8 @@ return [
         'dbname' => "first_db",
         'tableName' => [
             'cards_db' => "GarageWithCars",
+            'moto_db' => "GarageWithMoto",
             'banner_db' => "MainBanner"
         ]
-    ]
+    ],
 ];

@@ -1,26 +1,28 @@
 <?php
-require_once 'Connect.php';
 
-
-class DataHandler extends Connect
+class DataHandler 
 {
-    public function __construct($servername, $username, $password, $dbname, $tableName)
+    public $connect;
+    public $table;
+
+    public function __construct($connect, $table)
     {
-        parent::__construct($servername, $username, $password, $dbname, $tableName);
+        $this->table = $table;
+        $this->connect = $connect;
     }
 
-    public function getColumnNames() 
+    public function getColumnNames($dbName) 
     {
         $columnsNames = [];
 
-        $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$this->dbname' AND TABLE_NAME = '$this->tableName'";
+        $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$this->table'";
 
-        $sqlResult = $this->mysqli->query($sql);
+        $data = $this->connect->query($sql);
 
-        while ($sqlArray = $sqlResult->fetch_assoc()) { 
+        while ($sqlArray = $data->fetch_assoc()) { 
             array_push($columnsNames, $sqlArray["COLUMN_NAME"]);
         }
-
+        
         if(count($columnsNames) == 0)
         {
             return die("Таблица пустая");
@@ -29,25 +31,26 @@ class DataHandler extends Connect
         return $columnsNames;
     }
 
-    public function getData() 
+    public function getData($dbName) 
     {
         $finishedData = [];
-        $sql = "SELECT * FROM `$this->tableName`";
-        $data = $this->mysqli->query($sql)->fetch_all();
+        $sql = "SELECT * FROM `$this->table`";
+        $data = $this->connect->query($sql)->fetch_all();
         
         foreach ($data as $key => $values) {
-            $arrayCombine = array_combine($this->getColumnNames(), $values);
+            $arrayCombine = array_combine($this->getColumnNames($dbName), $values);
             array_push($finishedData, $arrayCombine);
         }
+        array_push($finishedData, $this->table);
         return $finishedData;
     }
 
     public function getOneData()
     {
         $id = $_GET['id'];
-        $sql = "SELECT * FROM `$this->tableName` WHERE id = '$id'";
+        $sql = "SELECT * FROM `$this->table` WHERE id = '$id'";
 
-        $data = $this->mysqli->query($sql)->fetch_all();
+        $data = $this->connect->query($sql)->fetch_all();
         return $data[0];
     }
 
@@ -72,9 +75,9 @@ class DataHandler extends Connect
         $keys  = implode(', ', $keys );
         $values = implode(', ', $values);
 
-        $sql = "INSERT INTO `$this->tableName` ($keys) VALUES (NULL".','."$values)";
+        $sql = "INSERT INTO `$this->table` ($keys) VALUES (NULL".','."$values)";
 
-        $this->mysqli->query($sql);
+        $this->connect->query($sql);
     }
 
     public function editData() 
@@ -88,34 +91,34 @@ class DataHandler extends Connect
             $sql .= "`$key` = '$value',";
         }
         $sql = rtrim($sql, ',');
-        $sql = "UPDATE `$this->tableName` SET ". $sql ." WHERE `$this->tableName`.`id` = '$id'";
+        $sql = "UPDATE `$this->table` SET ". $sql ." WHERE `$this->table`.`id` = '$id'";
 
-        $this->mysqli->query($sql);
+        $this->connect->query($sql);
     }
 
     public function deleteData()
     {
         $id = $_GET['id'];
-        $sql = "DELETE FROM `$this->tableName` WHERE `$this->tableName`.`id` = '$id'";
+        $sql = "DELETE FROM `$this->table` WHERE `$this->table`.`id` = '$id'";
         if(!$id){
             return die('ID not found');
         }
-        $this->mysqli->query($sql);
+        $this->connect->query($sql);
     }
 
     public function bannerCounter(){
         $templateData = ['url' => '../img/template.png'];
 
-        $sql= "SELECT * FROM `$this->tableName` WHERE `show_counter`=(SELECT MAX(`show_counter`) FROM `$this->tableName`)";
-        $data = $this->mysqli->query($sql)->fetch_assoc();
+        $sql= "SELECT * FROM `$this->table` WHERE `show_counter`=(SELECT MAX(`show_counter`) FROM `$this->table`)";
+        $data = $this->connect->query($sql)->fetch_assoc();
 
         if($data['show_counter'] <= 0) {
             return $templateData;
         }
         else 
         {
-            $sqlEdit = "UPDATE `$this->tableName` SET show_counter = ". (--$data['show_counter']) ." WHERE id = '{$data['id']}'";
-            $this->mysqli->query($sqlEdit);
+            $sqlEdit = "UPDATE `$this->table` SET show_counter = ". (--$data['show_counter']) ." WHERE id = '{$data['id']}'";
+            $this->connect->query($sqlEdit);
             return $data;
         }
         

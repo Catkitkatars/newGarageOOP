@@ -1,6 +1,9 @@
     <?php 
     foreach ($data as $key => $value):
-        
+        if(gettype($value) == 'string') {
+            continue;
+        }
+
             ?>
             <div style='padding:10px; border: #000 solid'>
             <?php foreach($value as $name => $item):?>
@@ -12,8 +15,8 @@
                 <?php } ?>
             <?php endforeach?>
                 <div style='display: flex; justify-content: space-around;'>
-                    <a href=pages/editCard.php?id=<?= $value['id'] ?>>Edit</a>
-                    <a href=requests/delete.php?id=<?= $value['id'] ?>>Delete</a>
+                    <a href="pages/editCard.php?tableName=<?= end($data) ?>&id=<?= $value['id'] ?>">Edit</a>
+                    <a href="requests/delete.php?tableName=<?= end($data) ?>&id=<?= $value['id'] ?>">Delete</a>
                 </div>
             </div>
         <?php endforeach?>

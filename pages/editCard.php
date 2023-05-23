@@ -1,31 +1,17 @@
-<h2>Edit Car</h2>
+<h2>Edit Card</h2>
 
 <?php 
 require_once '../database/DataHandler.php';
-
-
-$config = require_once '../config.php';
+require_once '../init.php';
+require_once '../templates/ob_include.php';
 
 $colunmName = new DataHandler(
-    $config['mysql']['servername'],
-    $config['mysql']['username'], 
-    $config['mysql']['password'],
-    $config['mysql']['dbname'],
-    $config['mysql']['tableName'] 
+    $GLOBALS['connect']->mysqli,
+    $_GET['tableName']
 );
 
 $placeholderData = $colunmName->getOneData();
-$i = 0;
-?>
-<form action="../requests/edit.php?id=<?=$_GET['id']?>" method="POST" >
+$getColumnNames = $colunmName->getColumnNames($GLOBALS['config']['mysql']['dbname']);
 
-<?php foreach($colunmName->getColumnNames() as $key => $value): ?>
-    <?php if($value == 'id') continue; $i++?>
 
-    <label for=<?=htmlspecialchars($value)?>><?=htmlspecialchars(ucfirst($value))?></label></br>
-    <input type="text" name=<?=htmlspecialchars($value)?> value="<?= $placeholderData[$i] ?>"></br>
-<?php endforeach ?> 
-
-</br><button type='submit'>Edit</button>
-</form>
-<?php
+echo ob_include(__DIR__ .'/../templates/editCard.phtml', ['placeholderData' => $placeholderData, 'getColumnNames' => $getColumnNames]);
