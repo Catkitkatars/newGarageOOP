@@ -1,12 +1,11 @@
 <h2>Add New Car</h2>
 
 <?php 
-require_once '../database/DataHandler.php';
+require_once '../autoloader.php';
 require_once '../init.php';
 require_once '../templates/ob_include.php';
 
-$tableName = $_GET['tableName'];
-
+$tableName = $_GET['tableName'] ?? '';
 
 
 $addCard = new DataHandler(

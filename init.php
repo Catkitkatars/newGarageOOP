@@ -1,6 +1,6 @@
 <?php 
 
-require_once __DIR__ . '/database/Connect.php';
+require_once 'autoloader.php';
 
 $config = require 'config.php';
 

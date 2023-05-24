@@ -1,9 +1,6 @@
 <?php 
-require_once 'database/DataHandler.php';
-require_once 'widgets/WidgetCard.php';
-require_once 'widgets/MainBanner.php';
+require_once 'autoloader.php';
 require_once 'templates/ob_include.php';
-
 require_once 'init.php';
 
 

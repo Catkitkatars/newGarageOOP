@@ -1,5 +1,5 @@
 <?php 
-require_once 'database/DataHandler.php';
+require_once 'autoloader.php';
 require_once 'templates/ob_include.php';
 
 
