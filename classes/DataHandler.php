@@ -106,22 +106,34 @@ class DataHandler
         $this->connect->query($sql);
     }
 
-    public function bannerCounter(){
-        $templateData = ['url' => '../img/template.png'];
+    public function bannerCounter($advertisers, $templateData){
+        $date = new DateTime();
+        $nextDay = $date->add(new DateInterval('P1D'))->format('d');
 
-        $sql= "SELECT * FROM `$this->table` WHERE `show_counter`=(SELECT MAX(`show_counter`) FROM `$this->table`)";
+        $sql= "SELECT * FROM $this->table ORDER BY сurrentDate LIMIT 1";
         $data = $this->connect->query($sql)->fetch_assoc();
 
-        if($data['show_counter'] <= 0) {
+        if($data["сurrentDate"] == $nextDay)
+        {
             return $templateData;
-        }
+        } 
         else 
         {
-            $sqlEdit = "UPDATE `$this->table` SET show_counter = ". (--$data['show_counter']) ." WHERE id = '{$data['id']}'";
-            $this->connect->query($sqlEdit);
+            $showCounter = --$data['show_counter'];
+            $sqlEditCounter = "UPDATE `$this->table` SET show_counter = '$showCounter' WHERE id = '{$data['id']}'";
+            $this->connect->query($sqlEditCounter);
+
+            if($showCounter == 0){
+                foreach($advertisers as $key => $value) {
+                    if($key == $data['name']){
+                        $showCounter = $value;
+                    }
+                }
+                $sqlEditCurrentDateAndCounter = "UPDATE `$this->table` SET show_counter = '$showCounter', сurrentDate = '$nextDay' WHERE id = '{$data['id']}'";
+                $this->connect->query($sqlEditCurrentDateAndCounter);
+            }
             return $data;
         }
-        
     }
 }
 

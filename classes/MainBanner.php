@@ -3,6 +3,7 @@ require_once 'autoloader.php';
 require_once 'templates/ob_include.php';
 
 
+
 class MainBanner extends DataHandler {
 
     public function __construct($connect, $table)
@@ -12,7 +13,7 @@ class MainBanner extends DataHandler {
     }
 
     public function render(){  
-        $url = $this->bannerCounter()['url'];
+        $url = $this->bannerCounter($GLOBALS['config']['advertisers'], $GLOBALS['config']['templateAdvertisers'])['url'];
         return ob_include( __DIR__ .'/../templates/mainBanner.phtml', ['url' => $url]);
     }
 }

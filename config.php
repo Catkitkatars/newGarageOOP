@@ -9,7 +9,14 @@ return [
         'tableName' => [
             'cards_db' => "GarageWithCars",
             'moto_db' => "GarageWithMoto",
-            'banner_db' => "MainBanner"
+            'banner_db' => "MainBanner",
         ]
     ],
+    'advertisers' => [
+        'dog' => 5,
+        'cat' => 10,
+    ],
+    'templateAdvertisers' => [
+        'url' => '../img/template.png',
+    ]
 ];
