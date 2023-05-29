@@ -1,6 +1,7 @@
 <?php 
+
 function my_autoloader($class) {
-    include 'classes/' . $class . '.php';
+    require_once __DIR__ .'/'. strtr($class, '\\', '/') . '.php';
     return $class;
 }
 

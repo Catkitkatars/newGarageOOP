@@ -1,4 +1,5 @@
 <?php 
+namespace classes;
 require_once 'autoloader.php';
 require_once 'templates/ob_include.php';
 

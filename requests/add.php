@@ -6,7 +6,7 @@ require_once '../init.php';
 
 $tableName = $_GET['tableName'];
 
-$add = new DataHandler(
+$add = new \classes\DataHandler(
     $GLOBALS['connect']->mysqli,
     $tableName
 );

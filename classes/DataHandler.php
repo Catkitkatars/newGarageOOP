@@ -1,4 +1,5 @@
 <?php
+namespace classes;
 
 class DataHandler 
 {
@@ -107,8 +108,8 @@ class DataHandler
     }
 
     public function bannerCounter($advertisers, $templateData){
-        $date = new DateTime();
-        $nextDay = $date->add(new DateInterval('P1D'))->format('d');
+        $date = new \DateTime();
+        $nextDay = $date->add(new \DateInterval('P1D'))->format('d');
 
         $sql= "SELECT * FROM $this->table ORDER BY сurrentDate LIMIT 1";
         $data = $this->connect->query($sql)->fetch_assoc();

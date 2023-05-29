@@ -1,5 +1,5 @@
 <?php 
-
+namespace classes;
 class WidgetCard
 {
     public $data;

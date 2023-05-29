@@ -5,7 +5,7 @@ require_once '../init.php';
 
 
 
-$edit = new DataHandler(
+$edit = new \classes\DataHandler(
     $GLOBALS['connect']->mysqli,
     $_GET['tableName']
 );

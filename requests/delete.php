@@ -4,7 +4,7 @@ require_once '../init.php';
 
 
 
-$delete = new DataHandler(
+$delete = new \classes\DataHandler(
     $GLOBALS['connect']->mysqli,
     $_GET['tableName']
 );

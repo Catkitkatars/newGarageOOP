@@ -8,7 +8,7 @@ require_once '../templates/ob_include.php';
 $tableName = $_GET['tableName'] ?? '';
 
 
-$addCard = new DataHandler(
+$addCard = new \classes\DataHandler(
     $GLOBALS['connect']->mysqli,
     $tableName
 );

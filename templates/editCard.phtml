@@ -1,6 +1,6 @@
 
 <?php $i = 0; ?>
-<form action="../requests/edit.php?tableName=<?= $tableName ?>&id=<?= $_GET['id'] ?>" method="POST" >
+<form action="../requests/edit.php?tableName=<?= $tableName ?>&id=<?= $id ?>" method="POST" >
 
 <?php foreach(($getColumnNames) as $key => $value): ?>
     <?php if($value == 'id') continue; $i++?>

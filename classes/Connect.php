@@ -1,4 +1,5 @@
 <?php
+namespace classes;
 class Connect {
     public $servername;
     public $username;
@@ -14,6 +15,6 @@ class Connect {
         $this->password = $password;
         $this->dbname = $dbname;
 
-        $this->mysqli = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        $this->mysqli = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
     }
 }
