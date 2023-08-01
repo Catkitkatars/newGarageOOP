@@ -1,25 +1,27 @@
-<h2>Edit Card</h2>
-
 <?php 
+session_start();
 require_once '../autoloader.php';
 require_once '../init.php';
 require_once '../templates/ob_include.php';
 
-$tableName = $_GET['tableName'] ?? '';
-$id = $_GET['id'];
+if(!isset($_SESSION['login'])) {
+    header('location: /');
+}
 
-$colunmName = new \classes\DataHandler(
-    $GLOBALS['connect']->mysqli,
-    $_GET['tableName']
+$sub_table = $_GET['table'] ?? '';
+$id = $_GET['id'] ?? '';
+
+$update_card = new \classes\DataHandler(
+    $GLOBALS['connect']->sqlite,
+    $sub_table
 );
 
-$placeholderData = $colunmName->getOneData();
-$getColumnNames = $colunmName->getColumnNames($GLOBALS['config']['mysql']['dbname']);
+$data = $update_card->get_one_data($id);
 
-
-echo ob_include(__DIR__ .'/../templates/editCard.phtml', [
-    'placeholderData' => $placeholderData, 
-    'getColumnNames' => $getColumnNames, 
-    'tableName' => $tableName,
+$html = ob_include(__DIR__ .'/../templates/editCard.phtml', [
+    'data' => $data, 
+    'table' => $sub_table,
     'id' => $id
 ]);
+
+echo ob_include(__DIR__ .'/../templates/doctype.phtml', ['html' => $html]);

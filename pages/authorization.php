@@ -1,8 +1,10 @@
 <?php 
 session_start();
 
+require_once '../templates/ob_include.php';
+
 if(!empty($_POST['login']) && !empty($_POST['password'])) {
-    $db = new SQLite3('../database/login.db');
+    $db = new SQLite3('../database/sqlite_database.db');
 
     $login = $db->escapeString($_POST['login']);
     $password = $db->escapeString($_POST['password']);
@@ -24,17 +26,10 @@ if(!empty($_POST['login']) && !empty($_POST['password'])) {
         die();
     }
 }
+
+$html = ob_include(__DIR__ . '/../templates/auth.phtml', []);
+
+echo ob_include(__DIR__ . '/../templates/doctype.phtml', ['html' => $html]);
 ?>
 
-<h3>Authorization</h3>
-
-<form method="POST" action="">
-    <p>Login:</p>
-    <input type="text" name="login">
-    <p>Password:</p>
-    <input type="password" name="password">
-    <br>
-    <br>
-    <button type="submit">Submit</button>
-</form>
 

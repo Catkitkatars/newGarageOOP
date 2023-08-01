@@ -1,8 +1,10 @@
-<form action="../requests/add.php?tableName=<?=$tableName?>" method="POST" >
-<?php foreach($getColumnNames as $key => $value): ?>
+
+<h2>Add New <?= ucfirst(substr($sub_table, 0, -6)) ?></h2>
+<form action="../requests/add.php?table=<?= $sub_table ?>" method="POST" >
+<?php foreach($get_column_names as $key => $value): ?>
     <?php if($value == 'id') continue;?>
     <label for=<?=htmlspecialchars($value)?>><?=htmlspecialchars(ucfirst($value))?></label></br>
     <input type="text" name=<?=htmlspecialchars($value)?>></br>
 <?php endforeach ?> 
-</br><button type='submit'>Add</button>
+</br><button class="button" style="padding: 10px 20px" type='submit'>Add</button>
 </form>

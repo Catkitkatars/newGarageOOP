@@ -1,20 +1,14 @@
 <?php
 namespace classes;
+
+use SQLite3;
+
 class Connect {
-    public $servername;
-    public $username;
-    public $password;
-    public $dbname;
 
-    public $mysqli;
+    public $sqlite;
 
-    public function __construct($servername, $username, $password, $dbname)
+    public function __construct($path)
     {
-        $this->servername = $servername;
-        $this->username = $username;
-        $this->password = $password;
-        $this->dbname = $dbname;
-
-        $this->mysqli = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        $this->sqlite = new SQLite3($path);
     }
 }

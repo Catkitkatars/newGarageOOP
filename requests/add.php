@@ -1,17 +1,21 @@
 <?php
+session_start();
 require_once '../autoloader.php';
-
 require_once '../init.php';
 
+if(!isset($_SESSION['login'])) {
+    header('location: /');
+}
 
-$tableName = $_GET['tableName'];
+$sub_table = $_GET['table'] ?? '';
 
 $add = new \classes\DataHandler(
-    $GLOBALS['connect']->mysqli,
-    $tableName
+    $GLOBALS['connect']->sqlite,
+    $sub_table
 );
 
-$add->addData();
-?>
+$add->add_data();
+header('Location: /');
 
-<a href="/">switch to home</a>
+
+

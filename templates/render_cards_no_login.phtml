@@ -1,0 +1,22 @@
+        <div style='padding:10px; border: #000 solid'>
+        <?php
+        
+            foreach($data as $name => $item) {
+                if($item == NULL || $name == 'id'){
+                    continue;
+                }
+        ?>
+                <p><?= htmlspecialchars(ucfirst($name)) ?>: <b><?= htmlspecialchars($item) ?></b></p>
+        <?php
+            }
+        ?>
+            <div style="height:30px; display:flex; justify-content: space-evenly; align-items: center; padding: 5px;">
+                <div class="likes" style="cursor: pointer;">
+                    <img src="svg/like.svg" alt="like" class="like_dislike_active">
+                </div>
+                <span class="likes_counter"> 
+                    <?= $likes ?>
+                </span>
+            </div>
+        </div>
+

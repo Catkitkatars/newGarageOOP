@@ -14,7 +14,7 @@ class MainBanner extends DataHandler {
     }
 
     public function render(){  
-        $url = $this->bannerCounter($GLOBALS['config']['advertisers'], $GLOBALS['config']['templateAdvertisers'])['url'];
+        $url = $this->banner_counter($GLOBALS['config']['advertisers'], $GLOBALS['config']['templateAdvertisers'])['url'];
         return ob_include( __DIR__ .'/../templates/mainBanner.phtml', ['url' => $url]);
     }
 }

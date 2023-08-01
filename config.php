@@ -1,16 +1,15 @@
 <?php
 
 return [
-    'mysql' => [
-        'servername' => "localhost",
-        'username' => "root",
-        'password' => "root",
-        'dbname' => "first_db",
-        'tableName' => [
-            'cards_db' => "GarageWithCars",
-            'moto_db' => "GarageWithMoto",
-            'banner_db' => "MainBanner",
-        ]
+    'sqlite' => [
+        'path' => __DIR__ . '/database/sqlite_database.db',
+        'main_table' => 'technics',
+        'sub_tables' => [
+            'cars' => 'cars_table',
+            'motos' => 'motos_table',
+            'bicycles' => 'bicycles_table'
+        ],
+        'banner_table' => 'main_banner'
     ],
     'advertisers' => [
         'dog' => 5,

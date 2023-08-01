@@ -1,13 +1,13 @@
 
-<?php $i = 0; ?>
-<form action="../requests/edit.php?tableName=<?= $tableName ?>&id=<?= $id ?>" method="POST" >
+<h2>Edit Card</h2>
+<form action="../requests/edit.php?table=<?= $table ?>&id=<?= $id ?>" method="POST" >
 
-<?php foreach(($getColumnNames) as $key => $value): ?>
-    <?php if($value == 'id') continue; $i++?>
+<?php foreach(($data) as $key => $value): ?>
+    <?php if($key == 'id') continue;?>
 
-    <label for=<?=htmlspecialchars($value)?>><?=htmlspecialchars(ucfirst($value))?></label></br>
-    <input type="text" placeholder="<?= $placeholderData[$i] ?>" name=<?=htmlspecialchars($value)?> value="<?= $placeholderData[$i] ?>"></br>
+    <label for=<?=htmlspecialchars($key)?>><?=htmlspecialchars(ucfirst($key))?></label></br>
+    <input type="text" placeholder="<?= htmlspecialchars($key) ?>" name=<?=htmlspecialchars($key)?> value="<?= $data[$key] ?>"></br>
 <?php endforeach ?> 
 
-</br><button type='submit'>Edit</button>
+</br><button class="button" style="padding: 10px 20px" type='submit'>Edit</button>
 </form>
